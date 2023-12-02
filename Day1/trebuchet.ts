@@ -17,9 +17,9 @@ console.log("Part 1: ", calibrationSum);
 const calibrationSumP2: number = inputFile
   .split("\n")
   .map((line) => {
-    const numPattern = /one|two|three|four|five|six|seven|eight|nine|\d/g;
+    const numPattern = /(?=(one|two|three|four|five|six|seven|eight|nine|\d))/g;
 
-    const lineNums = line.match(numPattern);
+    const lineNums = Array.from(line.matchAll(numPattern), (x) => x[1]);
     return +(lineNums
       ? `${ConvertToNumber(lineNums.at(0))}${ConvertToNumber(
           lineNums.at(lineNums.length - 1)
