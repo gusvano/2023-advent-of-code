@@ -2,11 +2,14 @@ import fs from "fs";
 
 const inputFile = fs.readFileSync("Day5/fertilizerSeeds-input.txt", "utf8");
 
-type MappingRule = {
-  destination: number;
+type SourceRange = {
   source: number;
   range: number;
 };
+
+type MappingRule = {
+  destination: number;
+} & SourceRange;
 
 type Map = {
   name: string;
@@ -70,6 +73,46 @@ const fertilizerSeedsP1 = () => {
 
 console.log("Part 1: ", fertilizerSeedsP1());
 
+function GetDestinationRanges(
+  sourceRanges: SourceRange[],
+  rules: MappingRule[]
+): SourceRange[] {
+  const destinationRanges: SourceRange[] = [];
+
+  sourceRanges.forEach((sourceRange) => {
+    let nextRange = sourceRange.range;
+    let nextSource = sourceRange.source;
+
+    while (
+      nextRange > 0 &&
+      nextSource <= sourceRange.source + sourceRange.range
+    ) {
+      const destinationRule = rules.find(
+        (rule) =>
+          nextSource >= rule.source && nextSource <= rule.source + rule.range
+      );
+
+      if (!destinationRule) {
+        destinationRanges.push({ source: nextSource, range: nextRange });
+        nextSource += nextRange;
+        nextRange = 0;
+
+        continue;
+      }
+
+      const range =
+        nextRange > destinationRule.range ? destinationRule.range : nextRange;
+
+      destinationRanges.push({ source: destinationRule.destination, range });
+
+      nextSource += range;
+      nextRange -= range;
+    }
+  });
+
+  return destinationRanges;
+}
+
 const fertilizerSeedsP2 = () => {
   const lines = inputFile.split("\n");
   const seeds = lines[0]
@@ -84,28 +127,23 @@ const fertilizerSeedsP2 = () => {
 
   let minLocation;
 
-  console.log(seeds);
-
   for (let i = 0; i < seeds.length - 1; i += 2) {
     let startingSeed = seeds[i];
     let range = seeds[i + 1];
 
-    console.log(startingSeed, range);
+    let sourceRanges: SourceRange[] = [{ source: startingSeed, range }];
 
-    for (let j = 0; j < range; j++) {
-      let nextSource = startingSeed + j;
-
-      for (let k = 0; k < maps.length; k++) {
-        nextSource = GetDestination(nextSource, maps[k].rules);
-      }
-
-      if (!minLocation || nextSource < minLocation) {
-        minLocation = nextSource;
-      }
+    for (let j = 0; j < maps.length; j++) {
+      sourceRanges = GetDestinationRanges(sourceRanges, maps[j].rules);
     }
+
+    minLocation = sourceRanges.reduce(
+      (acc, curr) => (curr.source < acc.source ? curr : acc),
+      minLocation ?? sourceRanges[0]
+    );
   }
 
-  return minLocation ?? -1;
+  return minLocation?.source ?? -1;
 };
 
 console.log("Part 2: ", fertilizerSeedsP2());
