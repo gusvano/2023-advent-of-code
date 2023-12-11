@@ -1,6 +1,6 @@
 import fs from "fs";
 
-const inputFile = fs.readFileSync("Day6/ferry-input.txt", "utf8");
+const inputFile = fs.readFileSync("Day06/ferry-input.txt", "utf8");
 
 const raceDetails = inputFile.split("\n");
 

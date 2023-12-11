@@ -1,6 +1,6 @@
 import fs from "fs";
 
-const inputFile = fs.readFileSync("Day1/trebuchet-input.txt", "utf8");
+const inputFile = fs.readFileSync("Day01/trebuchet-input.txt", "utf8");
 
 const calibrationSum: number = inputFile
   .split("\n")

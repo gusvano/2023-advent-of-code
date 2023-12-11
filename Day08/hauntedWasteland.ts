@@ -1,6 +1,6 @@
 import fs from "fs";
 
-const inputFile = fs.readFileSync("Day8/hauntedWasteland-input.txt", "utf8");
+const inputFile = fs.readFileSync("Day08/hauntedWasteland-input.txt", "utf8");
 
 type MapNode = {
   left: string;

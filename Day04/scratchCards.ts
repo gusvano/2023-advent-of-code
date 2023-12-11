@@ -1,6 +1,6 @@
 import fs from "fs";
 
-const inputFile = fs.readFileSync("Day4/scratchCards-input.txt", "utf8");
+const inputFile = fs.readFileSync("Day04/scratchCards-input.txt", "utf8");
 
 const scratchCardsSumP1 = inputFile
   .split("\n")

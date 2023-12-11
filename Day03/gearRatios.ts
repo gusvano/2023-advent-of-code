@@ -43,7 +43,7 @@ const CheckEachSurrounding = (
 };
 
 const gearRatiosSumP1 = () => {
-  const inputFile = fs.readFileSync("Day3/gearRatios-input.txt", "utf8");
+  const inputFile = fs.readFileSync("Day03/gearRatios-input.txt", "utf8");
   const gearRatiosGrid = inputFile.split("\n");
 
   let sum = 0;
@@ -74,7 +74,7 @@ console.log("Part 1: ", gearRatiosSumP1());
 const isGear = (char: string) => char === "*";
 
 const gearRatiosSumP2 = () => {
-  const inputFile = fs.readFileSync("Day3/gearRatios-input.txt", "utf8");
+  const inputFile = fs.readFileSync("Day03/gearRatios-input.txt", "utf8");
   const gearRatiosGrid = inputFile.split("\n");
 
   let sum = 0;
