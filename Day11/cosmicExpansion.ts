@@ -41,30 +41,6 @@ function GetEmptyRows(): number[] {
 
 const emptyRows = GetEmptyRows();
 
-function expandUniverse(): string[] {
-  const newUniverse: string[] = [];
-
-  // Expand universe
-  for (let x = 0; x < universe.length; x++) {
-    let newRow = universe[x];
-
-    emptyColumns.forEach((column, index) => {
-      newRow =
-        newRow.slice(0, column + index) + "." + newRow.slice(column + index);
-    });
-
-    if (emptyRows.includes(x)) {
-      newUniverse.push(newRow);
-    }
-
-    newUniverse.push(newRow);
-  }
-
-  return newUniverse;
-}
-
-const expandedUniverse = expandUniverse();
-
 function GetGalaxyLocations(universe: string[]): Point[] {
   const galaxyLocations: Point[] = [];
 
@@ -79,30 +55,7 @@ function GetGalaxyLocations(universe: string[]): Point[] {
   return galaxyLocations;
 }
 
-const cosmicExpansionP1 = () => {
-  const galaxyLocations = GetGalaxyLocations(expandedUniverse);
-  let galaxy = galaxyLocations.shift();
-  let totalDistance = 0;
-
-  while (galaxy) {
-    const [x, y] = galaxy;
-
-    for (let i = 0; i < galaxyLocations.length; i++) {
-      totalDistance +=
-        Math.abs(x - galaxyLocations[i][0]) +
-        Math.abs(y - galaxyLocations[i][1]);
-    }
-
-    galaxy = galaxyLocations.shift();
-  }
-
-  return totalDistance;
-};
-
-console.log("Part 1: ", cosmicExpansionP1());
-
-function ConvertPoint([x, y]: Point): Point {
-  const scale = 1000000;
+function ConvertPoint([x, y]: Point, scale: number): Point {
   const crossedColumnsLength = emptyColumns.filter(
     (column) => column < y
   ).length;
@@ -118,27 +71,27 @@ function ConvertPoint([x, y]: Point): Point {
   ];
 }
 
-const cosmicExpansionP2 = () => {
-  const galaxyLocations = GetGalaxyLocations(universe);
+function GetTotalDistance(scale: number): number {
+  const galaxyLocations = GetGalaxyLocations(universe).map((point) =>
+    ConvertPoint(point, scale)
+  );
   let galaxy = galaxyLocations.shift();
   let totalDistance = 0;
 
   while (galaxy) {
     const [x, y] = galaxy;
-    const [xConverted, yConverted] = ConvertPoint([x, y]);
 
     for (let i = 0; i < galaxyLocations.length; i++) {
       const [x2, y2] = galaxyLocations[i];
-      const [x2Converted, y2Converted] = ConvertPoint([x2, y2]);
 
-      totalDistance +=
-        Math.abs(xConverted - x2Converted) + Math.abs(yConverted - y2Converted);
+      totalDistance += Math.abs(x - x2) + Math.abs(y - y2);
     }
 
     galaxy = galaxyLocations.shift();
   }
 
   return totalDistance;
-};
+}
 
-console.log("Part 2: ", cosmicExpansionP2());
+console.log("Part 1: ", GetTotalDistance(2));
+console.log("Part 2: ", GetTotalDistance(1000000));
