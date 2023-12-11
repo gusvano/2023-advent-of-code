@@ -1,6 +1,6 @@
 import fs from "fs";
 
-const inputFile = fs.readFileSync("Day5/fertilizerSeeds-input.txt", "utf8");
+const inputFile = fs.readFileSync("Day05/fertilizerSeeds-input.txt", "utf8");
 
 type SourceRange = {
   source: number;

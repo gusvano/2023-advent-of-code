@@ -1,6 +1,6 @@
 import fs from "fs";
 
-const inputFile = fs.readFileSync("Day7/camelCards-input.txt", "utf8");
+const inputFile = fs.readFileSync("Day07/camelCards-input.txt", "utf8");
 
 enum Strength {
   FiveOfAKind = 6,

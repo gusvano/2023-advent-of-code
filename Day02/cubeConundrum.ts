@@ -4,7 +4,7 @@ const totalRed = 12;
 const totalGreen = 13;
 const totalBlue = 14;
 
-const inputFile = fs.readFileSync("Day2/cubeConundrum-input.txt", "utf8");
+const inputFile = fs.readFileSync("Day02/cubeConundrum-input.txt", "utf8");
 
 const conundrumSumPt1 = inputFile
   .split("\n")

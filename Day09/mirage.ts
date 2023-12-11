@@ -1,6 +1,6 @@
 import fs from "fs";
 
-const inputFile = fs.readFileSync("Day9/mirage-input.txt", "utf8");
+const inputFile = fs.readFileSync("Day09/mirage-input.txt", "utf8");
 
 function FindProjection(difference: number[]): number {
   if (difference.every((d) => d === 0)) {
